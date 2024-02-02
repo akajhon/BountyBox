@@ -1,22 +1,46 @@
 #!/usr/bin/env bash
 
 # Creating variables
+export HOME=/root
+export TOOLS="/opt"
+export ADDONS="/usr/share/addons"
+export CONFIGS="/usr/share/configs"
+export WORDLISTS="/usr/share/wordlists"
+export GO111MODULE=on
+export GOROOT=/usr/local/go
+export GOPATH=/go
+export PATH=${HOME}/:${GOPATH}/bin:${GOROOT}/bin:${PATH}
+export DEBIAN_FRONTEND=noninteractive
 
-ToolsPath="$HOME/Tools"
+#ToolsPath="$HOME/Tools"
 
 echo "Creating all necessary folders"
 
-mkdir -p ~/.gf
-mkdir -p ~/Tools/
-mkdir -p ~/.config/notify/
-mkdir -p ~/.config/amass/
-mkdir -p ~/.config/subfinder/
-mkdir -p ~/Lists/
+mkdir $WORDLISTS && mkdir $ADDONS && mkdir $CONFIGS
+mkdir -p $TOOLS/.gf
+mkdir -p $CONFIGS/notify/
+mkdir -p $CONFIGS/amass/
+mkdir -p $CONFIGS/subfinder/
+
+# --- Wordlists ---
+echo "Downloading Wordlists..."
+# seclists
+git clone --depth 1 https://github.com/danielmiessler/SecLists.git $WORDLISTS/seclists
+
+#payloadallthethings
+git clone --depth 1 https://github.com/swisskyrepo/PayloadsAllTheThings $WORDLISTS/payloadallthethings
+
+# rockyou
+curl -L https://github.com/praetorian-code/Hob0Rules/raw/db10d30b0e4295a648b8d1eab059b4d7a567bf0a/wordlists/rockyou.txt.gz \
+  -o $WORDLISTS/rockyou.txt.gz && \
+  gunzip $WORDLISTS/rockyou.txt.gz
 
 echo "Download some important files"
-eval wget -nc -O ~/Lists/XSS-OFJAAAH.txt https://raw.githubusercontent.com/danielmiessler/SecLists/master/Fuzzing/XSS/XSS-OFJAAAH.txt
-eval wget -nc -O ~/Lists/params.txt https://raw.githubusercontent.com/s0md3v/Arjun/master/arjun/db/params.txt
+eval wget -nc -O $WORDLISTS/XSS-OFJAAAH.txt https://raw.githubusercontent.com/danielmiessler/SecLists/master/Fuzzing/XSS/XSS-OFJAAAH.txt
+eval wget -nc -O $WORDLISTS/params.txt https://raw.githubusercontent.com/s0md3v/Arjun/master/arjun/db/params.txt
 eval wget -nc -O ~/.gf/potential.json https://raw.githubusercontent.com/devanshbatham/ParamSpider/master/gf_profiles/potential.json
+
+# --- Tools ---
 
 echo "Install FFF"
 go install github.com/tomnomnom/fff@latest
@@ -234,26 +258,24 @@ sleep 1
 
 echo "Cloning all repos and install"
 
-eval cd $ToolsPath
+git clone --depth 1 https://github.com/tomnomnom/gf $TOOLS/gf
+cp -r $TOOLS/gf/examples/*.json $TOOLS/.gf
 
-git clone https://github.com/tomnomnom/gf
-eval cd gf
-eval cp -r examples/*.json ~/.gf
+git clone --depth 1 https://github.com/1ndianl33t/Gf-Patterns $TOOLS/Gf-Pattern
+mv $TOOLS/Gf-Patterns/*.json $TOOLS/.gf
 
-eval cd $ToolsPath
-git clone https://github.com/1ndianl33t/Gf-Patterns
-eval cd Gf-Patterns
-eval mv *.json ~/.gf
+git clone --depth 1 https://github.com/m4ll0k/SecretFinder $TOOLS/SecretFinder
+pip3 install -r $TOOLS/SecretFinder/requirements.txt
 
-eval cd $ToolsPath
-git clone https://github.com/m4ll0k/SecretFinder
-eval cd SecretFinder
-eval pip3 install -r requirements.txt
+git clone --depth 1 https://github.com/m4ll0k/BBTz $TOOLS/BBTz
 
-eval cd $ToolsPath
-git clone https://github.com/m4ll0k/BBTz
+git clone --depth 1 https://github.com/devanshbatham/ParamSpider $TOOLS/ParamSpider
+pip3 install -r $TOOLS/ParamSpider/requirements.txt
 
-eval cd $ToolsPath
-git clone https://github.com/devanshbatham/ParamSpider
-eval cd ParamSpider
-eval pip3 install -r requirements.txt
+git clone --depth 1 https://github.com/s0md3v/XSStrike.git $TOOLS/xsstrike
+pip3 install -r $TOOLS/xsstrike/requirements.txt
+chmod a+x $TOOLS/xsstrike/xsstrike.py
+ln -sf $TOOLS/xsstrike/xsstrike.py /usr/local/bin/xsstrike
+
+echo "export PATH=${PATH}" >> ~/.zshrc
+chsh -s $(which zsh)
