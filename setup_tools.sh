@@ -21,6 +21,8 @@ mkdir -p $TOOLS/.gf
 mkdir -p $CONFIGS/notify/
 mkdir -p $CONFIGS/amass/
 mkdir -p $CONFIGS/subfinder/
+mkdir -p $CONFIGS/aquatone/
+mkdir -p $CONFIGS/findomain/
 
 # --- Wordlists ---
 echo "Downloading Wordlists..."
@@ -252,6 +254,11 @@ echo "Install hakrevdns"
 go install github.com/hakluke/hakrevdns@latest
 sleep 1
 
+echo "Install Aquatone"
+go get github.com/shelld3v/aquatone
+ln -s /usr/local/go/aquatone /usr/bin/aquatone
+sleep 1
+
 echo "Install dnsgen"
 pip3 install dnsgen
 sleep 1
@@ -269,6 +276,8 @@ pip3 install -r $TOOLS/SecretFinder/requirements.txt
 
 git clone --depth 1 https://github.com/m4ll0k/BBTz $TOOLS/BBTz
 
+git clone --depth 1 https://github.com/bonino97/new-zile.git $TOOLS/newzile
+
 git clone --depth 1 https://github.com/devanshbatham/ParamSpider $TOOLS/ParamSpider
 pip3 install -r $TOOLS/ParamSpider/requirements.txt
 
@@ -276,6 +285,14 @@ git clone --depth 1 https://github.com/s0md3v/XSStrike.git $TOOLS/xsstrike
 pip3 install -r $TOOLS/xsstrike/requirements.txt
 chmod a+x $TOOLS/xsstrike/xsstrike.py
 ln -sf $TOOLS/xsstrike/xsstrike.py /usr/local/bin/xsstrike
+
+wget --quiet https://github.com/Findomain/Findomain/releases/download/5.1.1/findomain-linux -O $TOOLS/findomain/findomain
+chmod +x $TOOLS/findomain/findomain
+ln -sf $TOOLS/findomain/findomain /usr/bin/findomain
+
+git clone --depth 1 https://github.com/GerbenJavado/LinkFinder.git $TOOLS/linkfinder
+python3 setup.py $TOOLS/linkfinder/install
+pip3 install -r $TOOLS/linkfinder/requirements.txt
 
 echo "export PATH=${PATH}" >> ~/.zshrc
 chsh -s $(which zsh)

@@ -55,6 +55,7 @@ RUN apt-get update && \
   ssh \
   tor \
   tmux \
+  termcolor \
   tzdata \
   wget \
   whois \
@@ -71,11 +72,14 @@ RUN python3 -m pip install --upgrade setuptools wheel
 COPY startup.sh /root
 COPY setup_cli.sh /root
 COPY setup_tools.sh /root
-COPY /szh /root
+COPY /szh /root/zsh
+COPY /Recon /root/Recon 
+
 
 RUN chmod +x /root/startup.sh
 RUN chmod +x /root/setup_cli.sh
 RUN chmod +x /root/setup_tools.sh
+RUN chmod +x /root/Recon/mainRecon.sh
 
 RUN ./setup_tools.sh
 RUN ./setup_cli.sh
