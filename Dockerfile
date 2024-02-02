@@ -1,15 +1,84 @@
-FROM golang:bullseye
+FROM ubuntu:latest
 
-# Install dependecies
+LABEL maintainer="akajhon" \
+    email="joaopedrorosa03@protonmail.com"
 
-RUN apt update && apt install -y \
-  python3 python3-pip \
-  git clone https://github.com/edoardottt/cariddi.git; cd cariddi; go get; make linux
+# Environment Variables
+ENV HOME=/root
+ENV TOOLS="/opt"
+ENV ADDONS="/usr/share/addons"
+ENV CONFIGS="/usr/share/configs"
+ENV WORDLISTS="/usr/share/wordlists"
+ENV GO111MODULE=on
+ENV GOROOT=/usr/local/go
+ENV GOPATH=/go
+ENV PATH=${HOME}/:${GOPATH}/bin:${GOROOT}/bin:${PATH}
+ENV DEBIAN_FRONTEND=noninteractive
 
+# Create working dirs
 WORKDIR /root
+RUN mkdir $WORDLISTS && mkdir $ADDONS && mkdir $CONFIGS
 
-COPY install_hacktools.sh /root
+# Install go
+RUN cd /opt && \
+  ARCH=$( arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/ ) && \
+  wget https://dl.google.com/go/go1.21.6.linux-${ARCH}.tar.gz && \
+  tar -xvf go1.21.6.linux-${ARCH}.tar.gz && \
+  rm -rf /opt/go1.21.6.linux-${ARCH}.tar.gz && \
+  mv go /usr/local
 
-RUN chmod +x /root/install_hacktools.sh
+# Install Essentials
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends --fix-missing \
+  apt-utils \
+  awscli \
+  build-essential \
+  curl \
+  dnsutils \
+  gcc \
+  git \
+  iputils-ping \
+  jq \
+  libgmp-dev \
+  libpcap-dev \
+  make \
+  nano \
+  netcat \
+  net-tools \
+  nodejs \
+  npm \
+  perl \
+  php \
+  proxychains \
+  python3 \
+  python3-pip \
+  ssh \
+  tor \
+  tmux \
+  tzdata \
+  wget \
+  whois \
+  zip \
+  unzip \
+  gzip \
+  zsh && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 
-RUN ./install_hacktools.sh
+# Install Python common dependencies
+RUN python3 -m pip install --upgrade setuptools wheel
+
+COPY startup.sh /root
+COPY setup_cli.sh /root
+COPY setup_tools.sh /root
+COPY /szh /root
+
+RUN chmod +x /root/startup.sh
+RUN chmod +x /root/setup_cli.sh
+RUN chmod +x /root/setup_tools.sh
+
+RUN ./setup_tools.sh
+RUN ./setup_cli.sh
+
+ENTRYPOINT ["bash", "/startup.sh"]
+CMD ["/bin/zsh"]
