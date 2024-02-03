@@ -19,14 +19,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /root
 RUN mkdir $WORDLISTS && mkdir $ADDONS && mkdir $CONFIGS
 
-# Install go
-RUN cd /opt && \
-  ARCH=$( arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/ ) && \
-  wget https://dl.google.com/go/go1.21.6.linux-${ARCH}.tar.gz && \
-  tar -xvf go1.21.6.linux-${ARCH}.tar.gz && \
-  rm -rf /opt/go1.21.6.linux-${ARCH}.tar.gz && \
-  mv go /usr/local
-
 # Install Essentials
 RUN apt-get update && \
   apt-get install -y --no-install-recommends --fix-missing \
@@ -43,6 +35,7 @@ RUN apt-get update && \
   libpcap-dev \
   make \
   nano \
+  vim \
   netcat \
   net-tools \
   nodejs \
@@ -55,7 +48,6 @@ RUN apt-get update && \
   ssh \
   tor \
   tmux \
-  termcolor \
   tzdata \
   wget \
   whois \
@@ -67,16 +59,21 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 # Install Python common dependencies
-RUN python3 -m pip install --upgrade setuptools wheel
+RUN python3 -m pip install --upgrade setuptools wheel termcolor
 
-COPY startup.sh /root
+# Install go
+RUN cd /opt && \
+  ARCH=$( arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/ ) && \
+  wget https://dl.google.com/go/go1.21.6.linux-${ARCH}.tar.gz && \
+  tar -xvf go1.21.6.linux-${ARCH}.tar.gz && \
+  rm -rf /opt/go1.21.6.linux-${ARCH}.tar.gz && \
+  mv go /usr/local
+
 COPY setup_cli.sh /root
 COPY setup_tools.sh /root
 COPY /szh /root/zsh
 COPY /Recon /root/Recon 
 
-
-RUN chmod +x /root/startup.sh
 RUN chmod +x /root/setup_cli.sh
 RUN chmod +x /root/setup_tools.sh
 RUN chmod +x /root/Recon/mainRecon.sh
@@ -84,5 +81,5 @@ RUN chmod +x /root/Recon/mainRecon.sh
 RUN ./setup_tools.sh
 RUN ./setup_cli.sh
 
-ENTRYPOINT ["bash", "/startup.sh"]
+#ENTRYPOINT ["bash", "/root/startup.sh"]
 CMD ["/bin/zsh"]

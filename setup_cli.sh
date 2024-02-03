@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo -e "\033[32m [!] Setting up CLI configs [!]\033[0m"
+
 # Set timezone
 ln -fs /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime && \
   dpkg-reconfigure --frontend noninteractive tzdata
