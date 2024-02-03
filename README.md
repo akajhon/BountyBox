@@ -2,7 +2,7 @@
 
 <h3 align="center">  Welcome to the BountyBox project! </h3> 
 
-    This Docker container is designed to equip security researchers, bug bounty hunters, and ethical hackers with a comprehensive set of tools to discover, analyze, and report vulnerabilities. The goal of this project is to streamline the setup process and provide a ready-to-use environment that supports a wide range of security testing and reconnaissance tasks.
+This Docker container is designed to equip security researchers, bug bounty hunters, and ethical hackers with a comprehensive set of tools to discover, analyze, and report vulnerabilities. The goal of this project is to streamline the setup process and provide a ready-to-use environment that supports a wide range of security testing and reconnaissance tasks.
 
 ***
 
