@@ -8,6 +8,7 @@ ENV HOME=/root
 ENV TOOLS="/opt"
 ENV ADDONS="/usr/share/addons"
 ENV CONFIGS="/usr/share/configs"
+ENV RESULTS="/root/results"
 ENV WORDLISTS="/usr/share/wordlists"
 ENV GO111MODULE=on
 ENV GOROOT=/usr/local/go
@@ -17,7 +18,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Create working dirs
 WORKDIR /root
-RUN mkdir $WORDLISTS && mkdir $ADDONS && mkdir $CONFIGS
+RUN mkdir $WORDLISTS && mkdir $ADDONS && mkdir $CONFIGS && mkdir $RESULTS
 
 # Install Essentials
 RUN apt-get update && \
