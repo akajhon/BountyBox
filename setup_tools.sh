@@ -130,7 +130,7 @@ go install github.com/tomnomnom/qsreplace@latest
 sleep 1
 
 echo -e "\033[32m [!] Install Amass [!]\033[0m"
-go install github.com/OWASP/Amass/v3/...@latest
+go install -v github.com/owasp-amass/amass/v4/...@master
 sleep 1
 
 echo -e "\033[32m [!] Install ffuf [!]\033[0m"
