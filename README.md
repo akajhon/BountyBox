@@ -35,7 +35,7 @@ docker build -t bountybox .
 Run the Container:
 
 ```bash
-docker run --hostname BountyBox -it bountybox
+docker run --rm -it -v /path/to/local/directory:/results --hostname BountyBox bountybox
 ```
 
 ### This command will start the container and open a shell session where you can start using the tools.
