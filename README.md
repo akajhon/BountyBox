@@ -39,3 +39,15 @@ docker run --rm -it -v /path/to/local/directory:/results --hostname BountyBox bo
 ```
 
 ### This command will start the container and open a shell session where you can start using the tools.
+
+
+## Inspiration
+
+This project was created with the intention of improving and continuing the development of the projects below, available at:
+
+```bash
+https://github.com/KingOfBugbounty/DockerHunt
+https://github.com/JakobTheDev/bug-bounty
+https://github.com/l34r00t/mainRecon
+https://github.com/mcnamee/huntkit
+```
