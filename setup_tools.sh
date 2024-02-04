@@ -5,6 +5,7 @@ export HOME=/root
 export TOOLS="/opt"
 export ADDONS="/usr/share/addons"
 export CONFIGS="/usr/share/configs"
+export RESULTS="/root/results"
 export WORDLISTS="/usr/share/wordlists"
 export GO111MODULE=on
 export GOROOT=/usr/local/go
