@@ -51,3 +51,10 @@ https://github.com/JakobTheDev/bug-bounty
 https://github.com/l34r00t/mainRecon
 https://github.com/mcnamee/huntkit
 ```
+
+## To-DOs
+ - [ ] Add Katana
+ - [ ] Add Dalfox
+ - [ ] Add ArchiveFuzz
+ - [ ] Add OpenRedireX
+ - [ ] Add chromium-browser to apt configuration on dockerfile
