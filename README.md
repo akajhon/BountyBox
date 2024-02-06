@@ -57,4 +57,6 @@ https://github.com/mcnamee/huntkit
  - [ ] Add Dalfox
  - [ ] Add ArchiveFuzz
  - [ ] Add OpenRedireX
- - [ ] Add chromium-browser to apt configuration on dockerfile
+ - [ ] Add Metabigor (export ASSUME_NO_MOVING_GC_UNSAFE_RISK_IT_WITH=go1.21 )
+ - [ ] Add prips, aiohttp, tqdm to pip configuration onm dockerfile
+ - [ ] Add chromium-browser  - https://github.com/scheib/chromium-latest-linux
