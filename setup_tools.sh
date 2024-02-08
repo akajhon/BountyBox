@@ -39,10 +39,28 @@ echo -e "\033[32m [!] Download some important files [!]\033[0m"
 eval wget -nc -O $WORDLISTS/XSS-OFJAAAH.txt https://raw.githubusercontent.com/danielmiessler/SecLists/master/Fuzzing/XSS/XSS-OFJAAAH.txt
 eval wget -nc -O $WORDLISTS/params.txt https://raw.githubusercontent.com/s0md3v/Arjun/master/arjun/db/large.txt
 
+# --- Download Chromium --
+
+echo -e "\033[32m [!] Downloadind latest Chromium [!]\033[0m"
+git clone --depth 1 https://github.com/scheib/chromium-latest-linux $CONFIGS/chromium-browser
+chmod a+x $CONFIGS/chromium-browser/run.sh
+chmod a+x $CONFIGS/chromium-browser/update.sh
+chmod a+x $CONFIGS/chromium-browser/update-and-run.sh
+./$CONFIGS/chromium-browser/update-and-run.sh
+sleep 1
+
 # --- Tools --
 
 echo -e "\033[32m [!] Install FFF [!]\033[0m"
 go install github.com/tomnomnom/fff@latest
+sleep 1
+
+echo -e "\033[32m [!] Install Katana [!]\033[0m"
+go install github.com/projectdiscovery/katana/cmd/katana@latest
+sleep 1
+
+echo -e "\033[32m [!] Install Dalfox [!]\033[0m"
+go install github.com/hahwul/dalfox/v2@latest
 sleep 1
 
 echo -e "\033[32m [!] Install airixss [!]\033[0m"
@@ -130,7 +148,7 @@ go install github.com/tomnomnom/qsreplace@latest
 sleep 1
 
 echo -e "\033[32m [!] Install Amass [!]\033[0m"
-go install -v github.com/owasp-amass/amass/v4/...@master
+go install github.com/OWASP/Amass/v3/...@latest
 sleep 1
 
 echo -e "\033[32m [!] Install ffuf [!]\033[0m"
@@ -227,6 +245,10 @@ echo -e "\033[32m [!] Install dalfox [!]\033[0m"
 go install github.com/hahwul/dalfox/v2@latest
 sleep 1
 
+echo -e "\033[32m [!] Install Metabigor [!]\033[0m"
+go install github.com/j3ssie/metabigor@latest
+sleep 1
+
 echo -e "\033[32m [!] Install puredns [!]\033[0m"
 go install github.com/d3mondev/puredns/v2@latest
 sleep 1
@@ -265,7 +287,7 @@ mv $TOOLS/Gf-Patterns/*.json $TOOLS/.gf
 
 git clone --depth 1 https://github.com/m4ll0k/SecretFinder $TOOLS/SecretFinder
 pip3 install -r $TOOLS/SecretFinder/requirements.txt
-ln -sf $TOOLS/SecretFinder/SecretFinder.py /usr/bin/secretfinder
+sudo ln -sf $TOOLS/SecretFinder/SecretFinder.py /usr/bin/secretfinder
 
 git clone --depth 1 https://github.com/m4ll0k/BBTz $TOOLS/BBTz
 
@@ -277,17 +299,31 @@ python3 $TOOLS/ParamSpider/setup.py install
 git clone --depth 1 https://github.com/s0md3v/XSStrike.git $TOOLS/xsstrike
 pip3 install -r $TOOLS/xsstrike/requirements.txt
 chmod a+x $TOOLS/xsstrike/xsstrike.py
-ln -sf $TOOLS/xsstrike/xsstrike.py /usr/local/bin/xsstrike
+sudo ln -sf $TOOLS/xsstrike/xsstrike.py /usr/local/bin/xsstrike
 
 mkdir $TOOLS/findomain
 wget --quiet https://github.com/Findomain/Findomain/releases/download/5.1.1/findomain-linux -O $TOOLS/findomain/findomain
 chmod +x $TOOLS/findomain/findomain
-ln -sf $TOOLS/findomain/findomain /usr/bin/findomain
+sudo ln -sf $TOOLS/findomain/findomain /usr/bin/findomain
 
 git clone --depth 1 https://github.com/GerbenJavado/LinkFinder.git $TOOLS/linkfinder
 python3 $TOOLS/linkfinder/setup.py install
 pip3 install -r $TOOLS/linkfinder/requirements.txt
-ln -sf $TOOLS/linkfinder/linkfinder.py /usr/bin/linkfinder
+sudo ln -sf $TOOLS/linkfinder/linkfinder.py /usr/bin/linkfinder
+
+git clone --depth 1 https://github.com/devanshbatham/ArchiveFuzz $TOOLS/archivefuzz
+pip3 install -r $TOOLS/archivefuzz/requirements.txt
+sudo ln -sf $TOOLS/archivefuzz/archivefuzz.py /usr/bin/archivefuzz
+
+git clone --depth 1 https://github.com/devanshbatham/openredirex $TOOLS/openredirex
+chmod a+x $TOOLS/openredirex/setup.sh
+./$TOOLS/openredirex/setup.sh
+
+curl -s https://raw.githubusercontent.com/pry0cc/axiom/master/interact/axiom-configure -o $TOOLS/axiom/axiom-configure.sh
+chmod a+x $TOOLS/axiom/axiom-configure.sh
+./$TOOLS/axiom-configure.sh
 
 echo "export PATH=${PATH}" >> ~/.zshrc
+echo "export ASSUME_NO_MOVING_GC_UNSAFE_RISK_IT_WITH=go1.21 " >> ~/.zshrc
+echo "export CHAOS_KEY=\"\"" >> ~/.zshrc
 chsh -s $(which zsh)
