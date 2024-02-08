@@ -21,7 +21,7 @@ WORKDIR /root
 RUN mkdir $WORDLISTS && mkdir $ADDONS && mkdir $CONFIGS && mkdir $RESULTS
 
 # Install Essentials
-RUN apt-get update && \
+RUN apt-get update && apt dist-upgrade && \
   apt-get install -y --no-install-recommends --fix-missing \
   apt-utils \
   awscli \
@@ -60,7 +60,7 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 # Install Python common dependencies
-RUN python3 -m pip install --upgrade setuptools wheel termcolor
+RUN python3 -m pip install --upgrade setuptools wheel termcolor prips aiohttp tqdm
 
 # Install go
 RUN cd /opt && \
