@@ -319,10 +319,6 @@ git clone --depth 1 https://github.com/devanshbatham/openredirex $TOOLS/openredi
 chmod a+x $TOOLS/openredirex/setup.sh
 ./$TOOLS/openredirex/setup.sh
 
-curl -s https://raw.githubusercontent.com/pry0cc/axiom/master/interact/axiom-configure -o $TOOLS/axiom/axiom-configure.sh
-chmod a+x $TOOLS/axiom/axiom-configure.sh
-./$TOOLS/axiom-configure.sh
-
 git clone --depth 1 https://github.com/maurosoria/dirsearch.git $TOOLS/dirsearch
 pip3 install -r $TOOLS/dirsearch/requirements.txt
 chmod a+x $TOOLS/dirsearch/dirsearch.py
@@ -332,6 +328,11 @@ git clone --depth 1 https://github.com/0x240x23elu/JSScanner.git $TOOLS/JSScanne
 pip3 install -r $TOOLS/JSScanner/requirements.txt
 chmod a+x $TOOLS/JSScanner/JSScanner.py
 sudo ln -sf $TOOLS/JSScanner/JSScanner.py /usr/local/bin/jsscanner
+
+git clone --depth 1 https://github.com/obheda12/GitDorker.git $TOOLS/GitDorker
+pip3 install -r $TOOLS/GitDorker/requirements.txt
+chmod a+x $TOOLS/GitDorker/GitDorker.py
+sudo ln -sf $TOOLS/GitDorker/GitDorker.py /usr/local/bin/gitdorker
 
 echo "export PATH=${PATH}" >> ~/.zshrc
 echo "export ASSUME_NO_MOVING_GC_UNSAFE_RISK_IT_WITH=go1.21 " >> ~/.zshrc
