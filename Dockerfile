@@ -60,7 +60,7 @@ RUN apt-get update && apt dist-upgrade && \
   rm -rf /var/lib/apt/lists/*
 
 # Install Python common dependencies
-RUN python3 -m pip install --upgrade setuptools wheel termcolor prips aiohttp tqdm
+RUN python3 -m pip install --upgrade setuptools wheel termcolor prips aiohttp tqdm arjun
 
 # Install go
 RUN cd /opt && \

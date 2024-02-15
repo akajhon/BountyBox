@@ -323,6 +323,16 @@ curl -s https://raw.githubusercontent.com/pry0cc/axiom/master/interact/axiom-con
 chmod a+x $TOOLS/axiom/axiom-configure.sh
 ./$TOOLS/axiom-configure.sh
 
+git clone --depth 1 https://github.com/maurosoria/dirsearch.git $TOOLS/dirsearch
+pip3 install -r $TOOLS/dirsearch/requirements.txt
+chmod a+x $TOOLS/dirsearch/dirsearch.py
+sudo ln -sf $TOOLS/dirsearch/dirsearch.py /usr/local/bin/dirsearch
+
+git clone --depth 1 https://github.com/0x240x23elu/JSScanner.git $TOOLS/JSScanner
+pip3 install -r $TOOLS/JSScanner/requirements.txt
+chmod a+x $TOOLS/JSScanner/JSScanner.py
+sudo ln -sf $TOOLS/JSScanner/JSScanner.py /usr/local/bin/jsscanner
+
 echo "export PATH=${PATH}" >> ~/.zshrc
 echo "export ASSUME_NO_MOVING_GC_UNSAFE_RISK_IT_WITH=go1.21 " >> ~/.zshrc
 echo "export CHAOS_KEY=\"\"" >> ~/.zshrc
